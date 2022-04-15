@@ -4,9 +4,13 @@ itemGrabbed.setAttribute("visible", false);
 let grabbed = false;
 
 item.onmouseenter = function(){
-    item.setAttribute("visible", false);
-    itemGrabbed.setAttribute("visible", true);
-    grabbed = true;
+    if(item.getAttribute("visible") === true){
+        item.setAttribute("visible", false);
+        itemGrabbed.setAttribute("visible", true);
+        grabbed = true;
+        pickaxeGrabbed.setAttribute("visible",false)
+        canIChopWood = false
+    }
 }
 
 const yellowSpheres = document.getElementsByClassName("js--sphere");
@@ -25,5 +29,33 @@ for (let i = 0; i < yellowSpheres.length; i++){
         itemGrabbed.setAttribute("visible", false);
         grabbed = false;
 
+    }
+}
+
+const trees = document.getElementsByClassName("js--tree")
+let wood = 0
+const pickaxe = document.getElementById("js--pickaxe")
+const pickaxeGrabbed = document.getElementById("js--pickaxe--grabbed")
+pickaxeGrabbed.setAttribute("visible", false)
+
+pickaxe.onmouseenter = function(){
+    if(pickaxe.getAttribute("visible") === true){
+        pickaxe.setAttribute("visible",false)
+        pickaxeGrabbed.setAttribute("visible",true)
+        itemGrabbed.setAttribute("visible",false)
+        canIChopWood = true
+    }
+    
+}
+
+let canIChopWood = false
+
+for(let i = 0; i < trees.length; i++){
+    trees[i].onmouseenter = function(){
+        if(trees[i].getAttribute("visible") === true && canIChopWood === true){
+            trees[i].setAttribute("visible",false);
+            wood = wood + 1
+            document.getElementById("js--wood").innerText = wood
+        }
     }
 }
